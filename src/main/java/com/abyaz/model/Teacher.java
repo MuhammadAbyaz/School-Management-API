@@ -1,19 +1,21 @@
 package com.abyaz.model;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Entity
 public class Teacher {
     @Id
     @SequenceGenerator(
-            name = "teacher-id",
+            name = "teacher-id-sequence",
             sequenceName = "teacher-id-sequence",
             allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "teacher-id-sequence"
     )
     private Integer id;
     private String name;
@@ -72,5 +74,29 @@ public class Teacher {
 
     public void setCoursesToTeach(ArrayList<String> coursesToTeach) {
         this.coursesToTeach = coursesToTeach;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Teacher teacher = (Teacher) o;
+        return Objects.equals(id, teacher.id) && Objects.equals(name, teacher.name) && Objects.equals(address, teacher.address) && Objects.equals(age, teacher.age) && Objects.equals(coursesToTeach, teacher.coursesToTeach);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, address, age, coursesToTeach);
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", age=" + age +
+                ", coursesToTeach=" + coursesToTeach +
+                '}';
     }
 }

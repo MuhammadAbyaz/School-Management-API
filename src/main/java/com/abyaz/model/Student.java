@@ -1,19 +1,22 @@
 package com.abyaz.model;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Student {
     @Id
     @SequenceGenerator(
-            name = "student-id",
+            name = "student-id-sequence",
             sequenceName = "student-id-sequence",
             allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "student-id-sequence"
     )
     private Integer id;
     private String name;
@@ -21,14 +24,14 @@ public class Student {
     private Integer age;
 
     @ElementCollection
-    private ArrayList<String> coursesToStudy;
+    private List<String> coursesToStudy;
 
-    public Student(Integer id, String name, String address, Integer age) {
+    public Student(Integer id, String name, String address, Integer age, List<String>coursesToStudy) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.age = age;
-        this.coursesToStudy = new ArrayList<>();
+        this.coursesToStudy = coursesToStudy;
     }
 
     public Student() {
@@ -66,11 +69,35 @@ public class Student {
         this.age = age;
     }
 
-    public ArrayList<String> getCoursesToStudy() {
+    public List<String> getCoursesToStudy() {
         return coursesToStudy;
     }
 
-    public void setCoursesToStudy(ArrayList<String> coursesToStudy) {
+    public void setCoursesToStudy(List<String> coursesToStudy) {
         this.coursesToStudy = coursesToStudy;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return Objects.equals(id, student.id) && Objects.equals(name, student.name) && Objects.equals(address, student.address) && Objects.equals(age, student.age) && Objects.equals(coursesToStudy, student.coursesToStudy);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, address, age, coursesToStudy);
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", age=" + age +
+                ", coursesToStudy=" + coursesToStudy+
+                '}';
     }
 }
