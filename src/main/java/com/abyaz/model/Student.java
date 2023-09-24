@@ -2,9 +2,9 @@ package com.abyaz.model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 
 @Entity
 public class Student {
@@ -26,8 +26,7 @@ public class Student {
     @ElementCollection
     private List<String> coursesToStudy;
 
-    public Student(Integer id, String name, String address, Integer age, List<String>coursesToStudy) {
-        this.id = id;
+    public Student(String name, String address, Integer age, List<String> coursesToStudy) {
         this.name = name;
         this.address = address;
         this.age = age;
@@ -97,7 +96,7 @@ public class Student {
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", age=" + age +
-                ", coursesToStudy=" + coursesToStudy+
+                ", coursesToStudy=" + coursesToStudy +
                 '}';
     }
 }
