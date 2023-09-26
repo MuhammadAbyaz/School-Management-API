@@ -1,7 +1,12 @@
 package com.abyaz.controller;
 
-import com.abyaz.repository.TeacherRepository;
+import com.abyaz.dto.AddTeacherDTO;
+import com.abyaz.dto.UpdateTeacherDTO;
 import com.abyaz.model.Teacher;
+import com.abyaz.service.TeacherService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,37 +16,30 @@ import java.util.List;
 @RequestMapping("/api/v1/teachers")
 public class TeacherController {
 
-    private TeacherRepository teacherRepository;
+    private final TeacherService teacherService;
 
-    public TeacherController(TeacherRepository teacherRepository) {
-        this.teacherRepository = teacherRepository;
+    TeacherController(TeacherService teacherService) {
+        this.teacherService = teacherService;
     }
 
     @GetMapping
-    public List<Teacher> getTeacher(){
-        return teacherRepository.findAll();
+    public List<Teacher> getTeacher() {
+        return teacherService.getTeacher();
     }
 
     @PostMapping
-    public void addTeacher(Teacher teacher){
-        teacherRepository.save(teacher);
+    public ResponseEntity<AddTeacherDTO> addTeacher(@RequestBody @Valid AddTeacherDTO addTeacherDTO) {
+        teacherService.addTeacher(addTeacherDTO);
+        return new ResponseEntity<>(addTeacherDTO, HttpStatus.CREATED);
     }
 
     @DeleteMapping("{teacherId}")
-    public void deleteTeacher(@PathVariable Integer id){
-        if (teacherRepository.existsById(id)){
-            teacherRepository.deleteById(id);
-        } else {
-            System.out.println("This id does not exists");
-        }
+    public void deleteTeacher(@PathVariable Integer teacherId) {
+        teacherService.deleteTeacher(teacherId);
     }
 
     @PutMapping("{teacherId}")
-    public void updateTeacher(@PathVariable Integer id, @RequestBody Teacher teacher){
-        if (teacherRepository.existsById(id)){
-            teacherRepository.save(teacher);
-        } else {
-            System.out.println("This id does not exists");
-        }
+    public void updateTeacher(@PathVariable Integer teacherId, @RequestBody UpdateTeacherDTO updateTeacherDTO) {
+        teacherService.updateTeacher(teacherId, updateTeacherDTO);
     }
 }

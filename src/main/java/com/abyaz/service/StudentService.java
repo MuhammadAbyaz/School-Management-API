@@ -1,5 +1,6 @@
 package com.abyaz.service;
 
+import com.abyaz.dto.AddStudentDTO;
 import com.abyaz.dto.UpdateStudentDTO;
 import com.abyaz.model.Student;
 import com.abyaz.repository.StudentRepository;
@@ -20,7 +21,12 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public void addStudent(Student student) {
+    public void addStudent(AddStudentDTO addStudentDTO) {
+        Student student = new Student();
+        student.setName(addStudentDTO.getName());
+        student.setAge(addStudentDTO.getAge());
+        student.setAddress(addStudentDTO.getAddress());
+        student.setCoursesToStudy(addStudentDTO.getCoursesToStudy());
         studentRepository.save(student);
     }
 

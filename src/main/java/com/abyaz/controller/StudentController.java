@@ -1,5 +1,6 @@
 package com.abyaz.controller;
 
+import com.abyaz.dto.AddStudentDTO;
 import com.abyaz.dto.UpdateStudentDTO;
 import com.abyaz.model.Student;
 import com.abyaz.service.StudentService;
@@ -28,9 +29,9 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<Student> addStudent(@RequestBody Student student) {
-        studentService.addStudent(student);
-        return new ResponseEntity<>(student, HttpStatus.CREATED);
+    public ResponseEntity<AddStudentDTO> addStudent(@RequestBody @Valid AddStudentDTO addStudentDTO) {
+        studentService.addStudent(addStudentDTO);
+        return new ResponseEntity<>(addStudentDTO, HttpStatus.CREATED);
     }
 
     @DeleteMapping("{studentId}")

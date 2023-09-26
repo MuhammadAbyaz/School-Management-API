@@ -1,47 +1,31 @@
-package com.abyaz.model;
+package com.abyaz.dto;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 import java.util.Objects;
 
-@Entity
-public class Teacher {
-    @Id
-    @SequenceGenerator(
-            name = "teacher-id-sequence",
-            sequenceName = "teacher-id-sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "teacher-id-sequence"
-    )
-    private Integer id;
+public class AddTeacherDTO {
+    @NotNull
+    @Size(min = 2, message = "Name should be at least of two character")
     private String name;
+
+    @NotNull
+    @Size(min = 2, message = "Name should be at least of two character")
     private String address;
-    private Integer age;
-    @ElementCollection
+
+    @Min(value = 18, message = "Age cannot be less than 18")
+    private int age;
+
     private List<String> coursesToTeach;
 
-    public Teacher(Integer id, String name, String address, Integer age, List<String> coursesToTeach) {
-        this.id = id;
+    public AddTeacherDTO(String name, String address, int age, List<String> coursesToTeach) {
         this.name = name;
         this.address = address;
         this.age = age;
         this.coursesToTeach = coursesToTeach;
-    }
-
-    public Teacher() {
-
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -60,11 +44,11 @@ public class Teacher {
         this.address = address;
     }
 
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -80,20 +64,19 @@ public class Teacher {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Teacher teacher = (Teacher) o;
-        return Objects.equals(id, teacher.id) && Objects.equals(name, teacher.name) && Objects.equals(address, teacher.address) && Objects.equals(age, teacher.age) && Objects.equals(coursesToTeach, teacher.coursesToTeach);
+        AddTeacherDTO that = (AddTeacherDTO) o;
+        return age == that.age && Objects.equals(name, that.name) && Objects.equals(address, that.address) && Objects.equals(coursesToTeach, that.coursesToTeach);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, address, age, coursesToTeach);
+        return Objects.hash(name, address, age, coursesToTeach);
     }
 
     @Override
     public String toString() {
-        return "Teacher{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+        return "AddTeacherDTO{" +
+                "name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", age=" + age +
                 ", coursesToTeach=" + coursesToTeach +
