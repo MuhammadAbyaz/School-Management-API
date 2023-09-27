@@ -28,7 +28,6 @@ public class TeacherService {
         teacher.setName(addTeacherDTO.getName());
         teacher.setAddress(addTeacherDTO.getAddress());
         teacher.setAge(addTeacherDTO.getAge());
-        teacher.setCoursesToTeach(addTeacherDTO.getCoursesToTeach());
         teacherRepository.save(teacher);
     }
 

@@ -2,7 +2,6 @@ package com.abyaz.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -21,15 +20,12 @@ public class Teacher {
     private String name;
     private String address;
     private Integer age;
-    @ElementCollection
-    private List<String> coursesToTeach;
 
-    public Teacher(Integer id, String name, String address, Integer age, List<String> coursesToTeach) {
+    public Teacher(Integer id, String name, String address, Integer age) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.age = age;
-        this.coursesToTeach = coursesToTeach;
     }
 
     public Teacher() {
@@ -39,11 +35,7 @@ public class Teacher {
     public Integer getId() {
         return id;
     }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
+    
     public String getName() {
         return name;
     }
@@ -68,25 +60,18 @@ public class Teacher {
         this.age = age;
     }
 
-    public List<String> getCoursesToTeach() {
-        return coursesToTeach;
-    }
-
-    public void setCoursesToTeach(List<String> coursesToTeach) {
-        this.coursesToTeach = coursesToTeach;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Teacher teacher = (Teacher) o;
-        return Objects.equals(id, teacher.id) && Objects.equals(name, teacher.name) && Objects.equals(address, teacher.address) && Objects.equals(age, teacher.age) && Objects.equals(coursesToTeach, teacher.coursesToTeach);
+        return Objects.equals(id, teacher.id) && Objects.equals(name, teacher.name) && Objects.equals(address, teacher.address) && Objects.equals(age, teacher.age);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, address, age, coursesToTeach);
+        return Objects.hash(id, name, address, age);
     }
 
     @Override
@@ -96,7 +81,6 @@ public class Teacher {
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", age=" + age +
-                ", coursesToTeach=" + coursesToTeach +
                 '}';
     }
 }

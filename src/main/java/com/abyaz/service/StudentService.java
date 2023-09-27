@@ -26,7 +26,6 @@ public class StudentService {
         student.setName(addStudentDTO.getName());
         student.setAge(addStudentDTO.getAge());
         student.setAddress(addStudentDTO.getAddress());
-        student.setCoursesToStudy(addStudentDTO.getCoursesToStudy());
         studentRepository.save(student);
     }
 

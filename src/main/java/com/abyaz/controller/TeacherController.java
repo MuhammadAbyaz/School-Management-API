@@ -39,7 +39,7 @@ public class TeacherController {
     }
 
     @PutMapping("{teacherId}")
-    public void updateTeacher(@PathVariable Integer teacherId, @RequestBody UpdateTeacherDTO updateTeacherDTO) {
+    public void updateTeacher(@PathVariable Integer teacherId, @Valid @RequestBody UpdateTeacherDTO updateTeacherDTO) {
         teacherService.updateTeacher(teacherId, updateTeacherDTO);
     }
 }

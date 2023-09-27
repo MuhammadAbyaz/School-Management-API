@@ -2,7 +2,6 @@ package com.abyaz.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Objects;
 
 
@@ -23,14 +22,10 @@ public class Student {
     private String address;
     private Integer age;
 
-    @ElementCollection
-    private List<String> coursesToStudy;
-
-    public Student(String name, String address, Integer age, List<String> coursesToStudy) {
+    public Student(String name, String address, Integer age) {
         this.name = name;
         this.address = address;
         this.age = age;
-        this.coursesToStudy = coursesToStudy;
     }
 
     public Student() {
@@ -38,10 +33,6 @@ public class Student {
 
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -68,25 +59,18 @@ public class Student {
         this.age = age;
     }
 
-    public List<String> getCoursesToStudy() {
-        return coursesToStudy;
-    }
-
-    public void setCoursesToStudy(List<String> coursesToStudy) {
-        this.coursesToStudy = coursesToStudy;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return Objects.equals(id, student.id) && Objects.equals(name, student.name) && Objects.equals(address, student.address) && Objects.equals(age, student.age) && Objects.equals(coursesToStudy, student.coursesToStudy);
+        return Objects.equals(id, student.id) && Objects.equals(name, student.name) && Objects.equals(address, student.address) && Objects.equals(age, student.age);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, address, age, coursesToStudy);
+        return Objects.hash(id, name, address, age);
     }
 
     @Override
@@ -96,7 +80,6 @@ public class Student {
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", age=" + age +
-                ", coursesToStudy=" + coursesToStudy +
                 '}';
     }
 }
